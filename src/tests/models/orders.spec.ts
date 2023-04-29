@@ -8,37 +8,36 @@ const userStore = new UserStore();
 
 describe("OrderStore", () => {
   beforeAll(async () => {
-    // Connect to the database before running the tests
-
-    await productStore.create({
+    const productOne = await productStore.create({
       price: 6.5,
       category: "Toy",
       name: "Barbie",
     });
 
-    await userStore.create({
+    const user = await userStore.create({
       firstName: "john",
       lastName: "doe",
       password: "udacity-project",
     });
 
-    await orderStore.create({
-      product_id: 1,
-      quantity: 2,
-      user_id: 1,
-      status: "complete",
-    });
+    if (productOne && user) {
+      await orderStore.create({
+        product_id: productOne.id as number,
+        quantity: 2,
+        user_id: user.id as number,
+        status: "complete",
+      });
 
-    await orderStore.create({
-      product_id: 1,
-      quantity: 2,
-      user_id: 1,
-      status: "active",
-    });
+      await orderStore.create({
+        product_id: productOne.id as number,
+        quantity: 2,
+        user_id: user.id as number,
+        status: "active",
+      });
+    }
   });
 
   afterAll(async () => {
-    // Delete the test data from the database after running the tests
     await orderStore.dropOrderRecords();
     await productStore.dropOrderRecords();
     await userStore.dropOrderRecords();
@@ -46,22 +45,18 @@ describe("OrderStore", () => {
 
   describe("show method", () => {
     it("should return a single order", async () => {
-      const order = await orderStore.show("1");
+      const order: Order = await orderStore.show("1");
 
       if (order) {
-        const result = await orderStore.show(
-          (order.id as unknown as Object).toString()
-        );
-
-        expect(result.id).toEqual(order.id);
+        expect(order).toBeTruthy();
       }
     });
 
     it("should return a single order based on user id", async () => {
-      const user = await userStore.show("1");
+      const user: User = await userStore.show("1");
 
       if (user) {
-        const userOrder = await orderStore.userOrders(
+        const userOrder: Order = await orderStore.userOrders(
           (user.id as number).toString(),
           "complete"
         );
@@ -71,9 +66,9 @@ describe("OrderStore", () => {
     });
   });
 
-  describe("show order status", () => {
+  describe("order status method", () => {
     it("show return order status 'complete'", async () => {
-      const order = await orderStore.show("1");
+      const order: Order = await orderStore.show("1");
 
       if (order) {
         expect(order.status).toBe("complete");
@@ -81,7 +76,7 @@ describe("OrderStore", () => {
     });
 
     it("show return order status 'active'", async () => {
-      const order = await orderStore.show("2");
+      const order: Order = await orderStore.show("2");
 
       if (order) {
         expect(order.status).toBe("active");

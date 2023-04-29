@@ -82,7 +82,7 @@ export class OrderStore {
     }
   }
 
-  async delete(id: number): Promise<Order> {
+  async delete(id: string): Promise<Order> {
     try {
       const sql = "DELETE FROM orders WHERE id=($1)";
       // @ts-ignore
@@ -99,7 +99,7 @@ export class OrderStore {
 
   async dropOrderRecords(): Promise<void> {
     try {
-      const sql = "TRUNCATE orders";
+      const sql = "TRUNCATE orders CASCADE";
       // @ts-ignore
       const conn = await client.connect();
       const result = await conn.query(sql);
