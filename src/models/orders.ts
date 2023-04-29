@@ -42,13 +42,13 @@ export class OrderStore {
     }
   }
 
-  async current(id: string): Promise<Order> {
+  async userOrders(id: string, status: string): Promise<Order> {
     try {
-      const sql = "SELECT * FROM orders WHERE user_id=($1)";
+      const sql = "SELECT * FROM orders WHERE user_id=($1) AND status=($2)";
       // @ts-ignore
       const conn = await client.connect();
 
-      const result = await conn.query(sql, [id]);
+      const result = await conn.query(sql, [id, status]);
 
       conn.release();
 
@@ -61,7 +61,7 @@ export class OrderStore {
   async create(b: Order): Promise<Order> {
     try {
       const sql =
-        "INSERT INTO orders (product_id, quantity, user_id) VALUES($1, $2, $3)";
+        "INSERT INTO orders (product_id, quantity, user_id, status) VALUES($1, $2, $3, $4)";
       // @ts-ignore
       const conn = await client.connect();
 
@@ -69,6 +69,7 @@ export class OrderStore {
         b.product_id,
         b.quantity,
         b.user_id,
+        b.status,
       ]);
 
       const Order = result.rows[0];
@@ -81,7 +82,7 @@ export class OrderStore {
     }
   }
 
-  async delete(id: string): Promise<Order> {
+  async delete(id: number): Promise<Order> {
     try {
       const sql = "DELETE FROM orders WHERE id=($1)";
       // @ts-ignore
@@ -89,13 +90,25 @@ export class OrderStore {
 
       const result = await conn.query(sql, [id]);
 
-      const order = result.rows[0];
-
       conn.release();
-
-      return order;
+      return result;
     } catch (err) {
       throw new Error(`Could not delete order ${id}. Error: ${err}`);
+    }
+  }
+
+  async dropOrderRecords(): Promise<void> {
+    try {
+      const sql = "TRUNCATE orders";
+      // @ts-ignore
+      const conn = await client.connect();
+      const result = await conn.query(sql);
+
+      conn.release();
+    } catch (err) {
+      throw new Error(
+        `Could not delete all records from orders table. Error: ${err}`
+      );
     }
   }
 }

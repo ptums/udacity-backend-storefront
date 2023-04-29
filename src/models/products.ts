@@ -75,7 +75,21 @@ export class ProductStore {
 
       return product;
     } catch (err) {
-      throw new Error(`Could not delete Product ${id}. Error: ${err}`);
+      throw new Error(`Could not delete product ${id}. Error: ${err}`);
+    }
+  }
+  async dropOrderRecords(): Promise<void> {
+    try {
+      const sql = "TRUNCATE products CASCADE";
+      // @ts-ignore
+      const conn = await client.connect();
+      const result = await conn.query(sql);
+
+      conn.release();
+    } catch (err) {
+      throw new Error(
+        `Could not delete all records from products table. Error: ${err}`
+      );
     }
   }
 }

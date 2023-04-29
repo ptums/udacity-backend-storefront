@@ -90,4 +90,19 @@ export class UserStore {
       throw new Error(`Could not delete user ${id}. Error: ${err}`);
     }
   }
+
+  async dropOrderRecords(): Promise<void> {
+    try {
+      const sql = "TRUNCATE users CASCADE";
+      // @ts-ignore
+      const conn = await client.connect();
+      const result = await conn.query(sql);
+
+      conn.release();
+    } catch (err) {
+      throw new Error(
+        `Could not delete all records from users table. Error: ${err}`
+      );
+    }
+  }
 }

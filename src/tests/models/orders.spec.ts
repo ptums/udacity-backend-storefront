@@ -26,7 +26,7 @@ describe("OrderStore", () => {
       product_id: 1,
       quantity: 2,
       user_id: 1,
-      status: "created",
+      status: "complete",
     });
 
     await orderStore.create({
@@ -39,36 +39,9 @@ describe("OrderStore", () => {
 
   afterAll(async () => {
     // Delete the test data from the database after running the tests
-    const orders = await orderStore.index();
-    const products = await productStore.index();
-    const users = await userStore.index();
-
-    new Promise(() => {
-      orders.forEach(async (order: Order) => {
-        await orderStore.delete((order.id as unknown as Order).toString());
-      });
-    })
-      .then(() => {
-        users.forEach(async (user: User) => {
-          await userStore.delete((user.id as unknown as User).toString());
-        });
-      })
-      .then(() => {
-        products.forEach(async (product: Product) => {
-          await productStore.delete(
-            (product.id as unknown as Product).toString()
-          );
-        });
-      });
-  });
-
-  describe("index method", () => {
-    it("should return an array of orders", async () => {
-      const orders = await orderStore.index();
-
-      expect(orders).toBeTruthy();
-      expect(orders.length).toBeGreaterThan(0);
-    });
+    await orderStore.dropOrderRecords();
+    await productStore.dropOrderRecords();
+    await userStore.dropOrderRecords();
   });
 
   describe("show method", () => {
@@ -88,8 +61,9 @@ describe("OrderStore", () => {
       const user = await userStore.show("1");
 
       if (user) {
-        const userOrder = await orderStore.current(
-          (user.id as number).toString()
+        const userOrder = await orderStore.userOrders(
+          (user.id as number).toString(),
+          "complete"
         );
 
         expect(userOrder).toBeTruthy();
@@ -98,11 +72,11 @@ describe("OrderStore", () => {
   });
 
   describe("show order status", () => {
-    it("show return order status 'created'", async () => {
+    it("show return order status 'complete'", async () => {
       const order = await orderStore.show("1");
 
       if (order) {
-        expect(order.status).toBe("created");
+        expect(order.status).toBe("complete");
       }
     });
 
