@@ -1,4 +1,3 @@
-import { User, UserStore } from "../../models/users";
 import { Product, ProductStore } from "../../models/products";
 
 const productStore = new ProductStore();

@@ -36,10 +36,21 @@ const create = async (req: Request, res: Response) => {
   }
 };
 
+const authenticate = async (req: Request, res: Response) => {
+  const { firstName, lastName, password } = req.body;
+  // Left off
+  const authUser = await store.create({
+    firstName,
+    lastName,
+    password,
+  });
+};
+
 const userRoutes = (app: express.Application) => {
   app.get("/users", authMiddleware, index);
   app.get("/users/:id", authMiddleware, show);
   app.post("/users", authMiddleware, create);
+  app.post("/authenticate", authenticate);
 };
 
 export default userRoutes;
