@@ -73,19 +73,16 @@ export class UserStore {
         "INSERT INTO users (firstName, lastName, password) VALUES($1, $2, $3)";
       // @ts-ignore
       const conn = await client.connect();
-
       const hash = bcrypt.hashSync(
         b.password + pepper,
         parseInt(saltRounds as string)
       );
 
       const result = await conn.query(sql, [b.firstName, b.lastName, hash]);
-
-      const User = result.rows[0];
-
+      const user = result.rows[0];
       conn.release();
 
-      return User;
+      return user;
     } catch (err) {
       throw new Error(`Could not add new User ${b.firstName}. Error: ${err}`);
     }
@@ -109,7 +106,7 @@ export class UserStore {
     }
   }
 
-  async dropOrderRecords(): Promise<void> {
+  async dropUserRecords(): Promise<void> {
     try {
       const sql = "TRUNCATE users CASCADE";
       // @ts-ignore

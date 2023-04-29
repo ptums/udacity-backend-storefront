@@ -2,8 +2,6 @@ import supertest from "supertest";
 import app from "../../server";
 import { ProductStore } from "../../models/products";
 import { UserStore } from "../../models/users";
-import exp from "constants";
-import { test } from "node:test";
 
 const request = supertest(app);
 const productStore = new ProductStore();

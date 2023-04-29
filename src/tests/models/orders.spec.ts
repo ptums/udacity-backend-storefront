@@ -40,7 +40,7 @@ describe("OrderStore", () => {
   afterAll(async () => {
     await orderStore.dropOrderRecords();
     await productStore.dropProductRecords();
-    await userStore.dropOrderRecords();
+    await userStore.dropUserRecords();
   });
 
   describe("orders show method", () => {

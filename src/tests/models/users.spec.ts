@@ -12,7 +12,7 @@ describe("UserStore", () => {
   });
 
   afterAll(async () => {
-    await userStore.dropOrderRecords();
+    await userStore.dropUserRecords();
   });
 
   describe("user index method", () => {
