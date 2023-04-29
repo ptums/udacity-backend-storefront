@@ -15,15 +15,7 @@ describe("UserStore", () => {
     await userStore.dropOrderRecords();
   });
 
-  describe("user show method", () => {
-    it("should return a single user", async () => {
-      const user: User = await userStore.show("1");
-
-      if (user) {
-        expect(user).toBeTruthy();
-      }
-    });
-
+  describe("user index method", () => {
     it("should return all users", async () => {
       const users: User[] = await userStore.index();
 
@@ -31,16 +23,34 @@ describe("UserStore", () => {
     });
   });
 
+  describe("user show method", () => {
+    it("should return a single user", async () => {
+      const users: User[] = await userStore.index();
+
+      if (users.length > 0) {
+        const user: User = await userStore.show(
+          (users[0].id as unknown as number).toString()
+        );
+
+        if (user) {
+          expect(user).toBeTruthy();
+        }
+      }
+    });
+  });
+
   describe("user create method", () => {
     it("should create a new user", async () => {
-      const createUser = await userStore.create({
+      const createUser: User = await userStore.create({
         firstName: "john",
         lastName: "doe 2",
         password: "udacity-project",
       });
 
       if (createUser) {
-        const getNewUser = await userStore.show("2");
+        const getNewUser: User = await userStore.show(
+          (createUser.id as unknown as number).toString()
+        );
         expect(getNewUser.lastName).toBe("doe 2");
       }
     });

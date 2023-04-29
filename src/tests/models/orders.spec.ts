@@ -43,7 +43,7 @@ describe("OrderStore", () => {
     await userStore.dropOrderRecords();
   });
 
-  describe("show method", () => {
+  describe("orders show method", () => {
     it("should return a single order", async () => {
       const order: Order = await orderStore.show("1");
 
@@ -68,7 +68,7 @@ describe("OrderStore", () => {
 
   describe("order status method", () => {
     it("show return order status 'complete'", async () => {
-      const order: Order = await orderStore.show("1");
+      const order: Order = await orderStore.userOrders("1", "complete");
 
       if (order) {
         expect(order.status).toBe("complete");
@@ -76,7 +76,7 @@ describe("OrderStore", () => {
     });
 
     it("show return order status 'active'", async () => {
-      const order: Order = await orderStore.show("2");
+      const order: Order = await orderStore.userOrders("2", "active");
 
       if (order) {
         expect(order.status).toBe("active");
