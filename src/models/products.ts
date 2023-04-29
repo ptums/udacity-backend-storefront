@@ -78,7 +78,7 @@ export class ProductStore {
       throw new Error(`Could not delete product ${id}. Error: ${err}`);
     }
   }
-  async dropOrderRecords(): Promise<void> {
+  async dropProductRecords(): Promise<void> {
     try {
       const sql = "TRUNCATE products CASCADE";
       // @ts-ignore

@@ -49,6 +49,24 @@ export class UserStore {
     }
   }
 
+  async findUser(firstName: string, lastName: string): Promise<User> {
+    try {
+      const sql = "SELECT * FROM users WHERE firstName=($1) and lastName=($2)";
+      // @ts-ignore
+      const conn = await client.connect();
+
+      const result = await conn.query(sql, [firstName, lastName]);
+
+      conn.release();
+
+      return result.rows[0];
+    } catch (err) {
+      throw new Error(
+        `Could not find User ${firstName} ${lastName}. Error: ${err}`
+      );
+    }
+  }
+
   async create(b: User): Promise<User> {
     try {
       const sql =

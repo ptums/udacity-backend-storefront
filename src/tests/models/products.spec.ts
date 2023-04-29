@@ -12,7 +12,7 @@ describe("ProductStore", () => {
   });
 
   afterAll(async () => {
-    await productStore.dropOrderRecords();
+    await productStore.dropProductRecords();
   });
 
   describe("product index method", () => {

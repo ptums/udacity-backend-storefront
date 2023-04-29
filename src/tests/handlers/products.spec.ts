@@ -3,22 +3,39 @@ import app from "../../server";
 import { ProductStore } from "../../models/products";
 import { UserStore } from "../../models/users";
 import exp from "constants";
+import { test } from "node:test";
 
 const request = supertest(app);
 const productStore = new ProductStore();
 const userStore = new UserStore();
 
+const testUser = {
+  firstName: "John",
+  lastName: "Doe2",
+  password: "temppassword123",
+};
+
+const testProductOne = {
+  price: 7,
+  category: "Toy",
+  name: "Racecar",
+};
+
+const testProductTwo = {
+  price: 10,
+  category: "Toy",
+  name: "Castle",
+};
+
 describe("Product Routes", () => {
   beforeAll(async () => {
-    await productStore.create({
-      price: 7,
-      category: "Toy",
-      name: "Racecar",
-    });
+    await productStore.create(testProductOne);
+
+    await userStore.create(testUser);
   });
 
   afterAll(async () => {
-    await productStore.dropOrderRecords();
+    await productStore.dropProductRecords();
   });
 
   describe("GET routes", () => {
@@ -49,15 +66,21 @@ describe("Product Routes", () => {
 
   describe("POST routes", () => {
     it("POST /products should return status 201", async () => {
-      const createTempUser = await request.post("/users").send({
-        firstName: "John",
-        lastName: "Doe 2",
-        password: "tempPassword123",
-      });
+      const authTestUser = await request
+        .post(`/users/authenticate`)
+        .send(testUser);
+      const res = authTestUser.body;
 
-      if (createTempUser) {
-        console.log(createTempUser);
-        expect(2).toBe(2);
+      if (Object.keys(res).includes("token")) {
+        const token = res.token;
+        const authBearer = `Bearer ${token}`;
+
+        const createProduct = await request
+          .post(`/products`)
+          .set("Authorization", authBearer)
+          .send(testProductTwo);
+
+        expect(createProduct.statusCode).toBe(201);
       }
     });
   });
