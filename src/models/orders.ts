@@ -42,6 +42,12 @@ export class OrderStore {
     }
   }
 
+  //   id SERIAL PRIMARY KEY,
+  // order_id INT,
+  // product_id INT,
+  // quantity INTEGER,
+  // FOREIGN KEY (order_id) REFERENCES Orders(id),
+  // FOREIGN KEY (product_id) REFERENCES Products(id)
   async userOrders(id: string, status: string | null): Promise<Order[]> {
     // @ts-ignore
     const conn = await client.connect();
@@ -51,7 +57,7 @@ export class OrderStore {
       let params: string[];
 
       if (status) {
-        sql = 'SELECT * FROM orders WHERE user_id=($1) AND status=($2)';
+        sql = 'SELECT * FROM order_product WHERE user_id=($1) AND status=($2)';
         params = [id, status];
       } else {
         sql = 'SELECT * FROM orders WHERE user_id=($1)';

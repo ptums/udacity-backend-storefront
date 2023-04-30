@@ -33,7 +33,18 @@ TOKEN_SECRET=<your_token_secret>
 SALT_ROUNDS=10
 ```
 
-Replace the placeholders with the appropriate values for your database and JWT secret. Be sure you create the development and test database in postgres and assign proper user roles before continuing.
+Replace the placeholders with the appropriate values for your database and JWT secret.
+
+To set up your `POSTGRES_TEST_DB` and `POSTGRES_DB` do the following:
+
+```
+psql postgres
+CREATE USER shopping_user WITH PASSWORD <password-of-your-choosing>;
+CREATE DATABASE shopping;
+CREATE DATABASE shopping_test;
+GRANT ALL PRIVILEGES ON DATABASE shopping TO shopping_user;
+GRANT ALL PRIVILEGES ON DATABASE shopping_test TO shopping_user;
+```
 
 This command will create the necessary database tables and insert some sample data.
 
@@ -56,3 +67,24 @@ npm test
 ```
 
 This will run the tests in the tests directory of the project.
+
+## API Endpoints
+
+### Products
+
+- GET /products - Get a list of all products
+- GET /product/id - Get a single product by ID
+- POST /products - Create a new product (token required)
+
+### Orders
+
+- GET /orders/:status/:id - Get all orders from a user categorized by status (token required)
+- GET /orders/:id - Get all orders from a user (token required)
+- POST /orders - Create a new order (token required)
+
+### Users
+
+- GET /users - get a list of all users (token required)
+- GET /users/:id get a user by id (token required)
+- POST /users - create a user
+- POST /usrs/authenticate - authenticate a user
