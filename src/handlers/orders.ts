@@ -4,19 +4,19 @@ import authMiddleware from "../utils/authentication-middleware";
 
 const store = new OrderStore();
 
-const active = async (req: Request, res: Response) => {
-  const order = await store.userOrders(req.params.id, "active");
+const orderStatus = async (req: Request, res: Response) => {
+  const order = await store.userOrders(req.params.id, req.params.status);
   res.json(order);
 };
 
-const complete = async (req: Request, res: Response) => {
-  const order = await store.userOrders(req.params.id, "complete");
+const userOrders = async (req: Request, res: Response) => {
+  const order = await store.userOrders(req.params.id, null);
   res.json(order);
 };
 
 const orderRoutes = (app: express.Application) => {
-  app.get("/orders/complete/:id", authMiddleware, complete);
-  app.get("/orders/active/:id", authMiddleware, active);
+  app.get("/orders/:status/:id", authMiddleware, orderStatus);
+  app.get("/orders/:id", authMiddleware, userOrders);
 };
 
 export default orderRoutes;

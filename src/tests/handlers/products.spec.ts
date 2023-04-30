@@ -7,7 +7,7 @@ const request = supertest(app);
 const productStore = new ProductStore();
 const userStore = new UserStore();
 
-const testUser = {
+const testProductUser = {
   firstName: "John",
   lastName: "Doe2",
   password: "temppassword123",
@@ -29,7 +29,7 @@ describe("Product Routes", () => {
   beforeAll(async () => {
     await productStore.create(testProductOne);
 
-    await userStore.create(testUser);
+    await userStore.create(testProductUser);
   });
 
   afterAll(async () => {
@@ -66,7 +66,7 @@ describe("Product Routes", () => {
     it("POST /products should return status 201", async () => {
       const authTestUser = await request
         .post(`/users/authenticate`)
-        .send(testUser);
+        .send(testProductUser);
       const res = authTestUser.body;
 
       if (Object.keys(res).includes("token")) {

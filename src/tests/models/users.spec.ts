@@ -6,7 +6,7 @@ describe("UserStore", () => {
   beforeAll(async () => {
     await userStore.create({
       firstName: "john",
-      lastName: "doe",
+      lastName: "doe2",
       password: "udacity-project",
     });
   });
@@ -43,7 +43,7 @@ describe("UserStore", () => {
     it("should create a new user", async () => {
       const createUser: User = await userStore.create({
         firstName: "john",
-        lastName: "doe 2",
+        lastName: "doe5",
         password: "udacity-project",
       });
 
@@ -51,7 +51,8 @@ describe("UserStore", () => {
         const getNewUser: User = await userStore.show(
           (createUser.id as unknown as number).toString()
         );
-        expect(getNewUser.lastName).toBe("doe 2");
+        // @ts-ignore
+        expect(getNewUser.lastname).toBe("doe5");
       }
     });
   });

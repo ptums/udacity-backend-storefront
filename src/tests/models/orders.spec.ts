@@ -1,5 +1,5 @@
 import { Order, OrderStore } from "../../models/orders";
-import { Product, ProductStore } from "../../models/products";
+import { ProductStore } from "../../models/products";
 import { User, UserStore } from "../../models/users";
 
 const orderStore = new OrderStore();
@@ -8,30 +8,30 @@ const userStore = new UserStore();
 
 describe("OrderStore", () => {
   beforeAll(async () => {
-    const productOne = await productStore.create({
+    const testOrderProduct = await productStore.create({
       price: 6.5,
       category: "Toy",
       name: "Barbie",
     });
 
-    const user = await userStore.create({
+    const testOrderUser = await userStore.create({
       firstName: "john",
-      lastName: "doe",
+      lastName: "doe1",
       password: "udacity-project",
     });
 
-    if (productOne && user) {
+    if (testOrderProduct && testOrderUser) {
       await orderStore.create({
-        product_id: productOne.id as number,
+        product_id: testOrderProduct.id as number,
         quantity: 2,
-        user_id: user.id as number,
+        user_id: testOrderUser.id as number,
         status: "complete",
       });
 
       await orderStore.create({
-        product_id: productOne.id as number,
-        quantity: 2,
-        user_id: user.id as number,
+        product_id: testOrderProduct.id as number,
+        quantity: 5,
+        user_id: testOrderUser.id as number,
         status: "active",
       });
     }
@@ -43,43 +43,64 @@ describe("OrderStore", () => {
     await userStore.dropUserRecords();
   });
 
-  describe("orders show method", () => {
-    it("should return a single order", async () => {
-      const order: Order = await orderStore.show("1");
+  describe("userOrders method", () => {
+    it("should return orders based on user id", async () => {
+      const users = await userStore.index();
 
-      if (order) {
-        expect(order).toBeTruthy();
+      if (users.length > 0) {
+        // @ts-ignore
+        const testUser = users.filter((u) => u.lastname === "doe1");
+
+        if (testUser.length > 0) {
+          const userId = testUser[0].id;
+
+          const userOrders: Order[] = await orderStore.userOrders(
+            (userId as number).toString(),
+            null
+          );
+
+          expect(userOrders.length).toBeGreaterThan(0);
+        }
       }
     });
 
-    it("should return a single order based on user id", async () => {
-      const user: User = await userStore.show("1");
+    it("should return 'active' orders based on user id", async () => {
+      const users = await userStore.index();
 
-      if (user) {
-        const userOrder: Order = await orderStore.userOrders(
-          (user.id as number).toString(),
-          "complete"
-        );
+      if (users.length > 0) {
+        // @ts-ignore
+        const testUser = users.filter((u) => u.lastname === "doe1");
 
-        expect(userOrder).toBeTruthy();
-      }
-    });
-  });
+        if (testUser.length > 0) {
+          const userId = testUser[0].id;
 
-  describe("order status method", () => {
-    it("show return order status 'complete'", async () => {
-      const order: Order = await orderStore.userOrders("1", "complete");
+          const userOrders: Order[] = await orderStore.userOrders(
+            (userId as number).toString(),
+            "active"
+          );
 
-      if (order) {
-        expect(order.status).toBe("complete");
+          expect(userOrders.length).toBeGreaterThan(0);
+        }
       }
     });
 
-    it("show return order status 'active'", async () => {
-      const order: Order = await orderStore.userOrders("2", "active");
+    it("should return 'complete' orders based on user id", async () => {
+      const users = await userStore.index();
 
-      if (order) {
-        expect(order.status).toBe("active");
+      if (users.length > 0) {
+        // @ts-ignore
+        const testUser = users.filter((u) => u.lastname === "doe1");
+
+        if (testUser.length > 0) {
+          const userId = testUser[0].id;
+
+          const userOrders: Order[] = await orderStore.userOrders(
+            (userId as number).toString(),
+            "complete"
+          );
+
+          expect(userOrders.length).toBeGreaterThan(0);
+        }
       }
     });
   });
