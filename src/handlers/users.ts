@@ -64,7 +64,7 @@ const authenticate = async (req: Request, res: Response) => {
 const userRoutes = (app: express.Application) => {
   app.get('/users', authMiddleware, index);
   app.get('/users/:id', authMiddleware, show);
-  app.post('/users', authMiddleware, create);
+  app.post('/users', create);
   app.post('/users/authenticate', authenticate);
 };
 

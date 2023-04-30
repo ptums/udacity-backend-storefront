@@ -55,23 +55,15 @@ describe('User Routes', () => {
 
   describe('POST routes', () => {
     it('POST /users should return status 201', async () => {
-      const authTestUser = await request.post(`/users/authenticate`).send(testUser);
-      const res = authTestUser.body;
+      const response = await request.post('/users').send({
+        firstName: 'John',
+        lastName: 'Doe3',
+        password: 'temppassword456',
+      });
 
-      if (Object.keys(res).includes('token')) {
-        const token = res.token;
-        const authBearer = `Bearer ${token}`;
+      console.log({ response });
 
-        const response = await request.post('/users').set('Authorization', authBearer).send({
-          firstName: 'John',
-          lastName: 'Doe3',
-          password: 'temppassword456',
-        });
-
-        console.log({ response });
-
-        expect(response.status).toBe(201);
-      }
+      expect(response.status).toBe(201);
     });
   });
 });
