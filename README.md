@@ -33,13 +33,7 @@ TOKEN_SECRET=<your_token_secret>
 SALT_ROUNDS=10
 ```
 
-Replace the placeholders with the appropriate values for your database and JWT secret.
-
-Run the following command to create the database tables and seed the database with sample data:
-
-```
-npm run db:init
-```
+Replace the placeholders with the appropriate values for your database and JWT secret. Be sure you create the development and test database in postgres and assign proper user roles before continuing.
 
 This command will create the necessary database tables and insert some sample data.
 
