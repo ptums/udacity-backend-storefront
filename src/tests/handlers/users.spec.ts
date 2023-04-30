@@ -1,5 +1,3 @@
-// - Create [token required]
-
 import supertest from "supertest";
 import app from "../../server";
 import { User, UserStore } from "../../models/users";

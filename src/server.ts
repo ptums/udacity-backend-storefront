@@ -5,7 +5,7 @@ import productRoutes from "./handlers/products";
 import userRoutes from "./handlers/users";
 
 const app: express.Application = express();
-const address: string = "0.0.0.0:3000";
+const address = "0.0.0.0:3000";
 
 app.use(bodyParser.json());
 

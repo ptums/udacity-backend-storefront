@@ -115,7 +115,7 @@ export class OrderStore {
       const sql = "TRUNCATE orders CASCADE";
       // @ts-ignore
       const conn = await client.connect();
-      const result = await conn.query(sql);
+      await conn.query(sql);
 
       conn.release();
     } catch (err) {

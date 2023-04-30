@@ -1,4 +1,4 @@
-import express, { Request, Response, Router } from "express";
+import express, { Request, Response } from "express";
 import { ProductStore } from "../models/products";
 import authMiddleware from "../utils/authentication-middleware";
 

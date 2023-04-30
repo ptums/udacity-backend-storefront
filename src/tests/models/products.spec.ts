@@ -50,6 +50,7 @@ describe("ProductStore", () => {
         const getNewProduct: Product = await productStore.show(
           (createProduct.id as unknown as number).toString()
         );
+
         expect(getNewProduct.name).toBe("Barbie");
       }
     });
