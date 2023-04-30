@@ -1,6 +1,6 @@
-import express, { Request, Response } from "express";
-import { ProductStore } from "../models/products";
-import authMiddleware from "../utils/authentication-middleware";
+import express, { Request, Response } from 'express';
+import { ProductStore } from '../models/products';
+import authMiddleware from '../utils/authentication-middleware';
 
 const store = new ProductStore();
 
@@ -31,9 +31,9 @@ const create = async (req: Request, res: Response) => {
 };
 
 const productRoutes = (app: express.Application) => {
-  app.get("/products", index);
-  app.get("/product/:id", show);
-  app.post("/products", authMiddleware, create);
+  app.get('/products', index);
+  app.get('/product/:id', show);
+  app.post('/products', authMiddleware, create);
 };
 
 export default productRoutes;

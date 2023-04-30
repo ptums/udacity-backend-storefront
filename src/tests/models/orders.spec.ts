@@ -1,23 +1,23 @@
-import { Order, OrderStore } from "../../models/orders";
-import { ProductStore } from "../../models/products";
-import { UserStore } from "../../models/users";
+import { Order, OrderStore } from '../../models/orders';
+import { ProductStore } from '../../models/products';
+import { UserStore } from '../../models/users';
 
 const orderStore = new OrderStore();
 const productStore = new ProductStore();
 const userStore = new UserStore();
 
-describe("OrderStore", () => {
+describe('OrderStore', () => {
   beforeAll(async () => {
     const testOrderProduct = await productStore.create({
       price: 6.5,
-      category: "Toy",
-      name: "Barbie",
+      category: 'Toy',
+      name: 'Barbie',
     });
 
     const testOrderUser = await userStore.create({
-      firstName: "john",
-      lastName: "doe1",
-      password: "udacity-project",
+      firstName: 'john',
+      lastName: 'doe1',
+      password: 'udacity-project',
     });
 
     if (testOrderProduct && testOrderUser) {
@@ -25,14 +25,14 @@ describe("OrderStore", () => {
         product_id: testOrderProduct.id as number,
         quantity: 2,
         user_id: testOrderUser.id as number,
-        status: "complete",
+        status: 'complete',
       });
 
       await orderStore.create({
         product_id: testOrderProduct.id as number,
         quantity: 5,
         user_id: testOrderUser.id as number,
-        status: "active",
+        status: 'active',
       });
     }
   });
@@ -43,21 +43,18 @@ describe("OrderStore", () => {
     await userStore.dropUserRecords();
   });
 
-  describe("userOrders method", () => {
-    it("should return orders based on user id", async () => {
+  describe('userOrders method', () => {
+    it('should return orders based on user id', async () => {
       const users = await userStore.index();
 
       if (users.length > 0) {
         // @ts-ignore
-        const testUser = users.filter((u) => u.lastname === "doe1");
+        const testUser = users.filter((u) => u.lastname === 'doe1');
 
         if (testUser.length > 0) {
           const userId = testUser[0].id;
 
-          const userOrders: Order[] = await orderStore.userOrders(
-            (userId as number).toString(),
-            null
-          );
+          const userOrders: Order[] = await orderStore.userOrders((userId as number).toString(), null);
 
           expect(userOrders.length).toBeGreaterThan(0);
         }
@@ -69,15 +66,12 @@ describe("OrderStore", () => {
 
       if (users.length > 0) {
         // @ts-ignore
-        const testUser = users.filter((u) => u.lastname === "doe1");
+        const testUser = users.filter((u) => u.lastname === 'doe1');
 
         if (testUser.length > 0) {
           const userId = testUser[0].id;
 
-          const userOrders: Order[] = await orderStore.userOrders(
-            (userId as number).toString(),
-            "active"
-          );
+          const userOrders: Order[] = await orderStore.userOrders((userId as number).toString(), 'active');
 
           expect(userOrders.length).toBeGreaterThan(0);
         }
@@ -89,15 +83,12 @@ describe("OrderStore", () => {
 
       if (users.length > 0) {
         // @ts-ignore
-        const testUser = users.filter((u) => u.lastname === "doe1");
+        const testUser = users.filter((u) => u.lastname === 'doe1');
 
         if (testUser.length > 0) {
           const userId = testUser[0].id;
 
-          const userOrders: Order[] = await orderStore.userOrders(
-            (userId as number).toString(),
-            "complete"
-          );
+          const userOrders: Order[] = await orderStore.userOrders((userId as number).toString(), 'complete');
 
           expect(userOrders.length).toBeGreaterThan(0);
         }

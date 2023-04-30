@@ -1,6 +1,6 @@
-import express, { Request, Response } from "express";
-import { OrderStore } from "../models/orders";
-import authMiddleware from "../utils/authentication-middleware";
+import express, { Request, Response } from 'express';
+import { OrderStore } from '../models/orders';
+import authMiddleware from '../utils/authentication-middleware';
 
 const store = new OrderStore();
 
@@ -15,8 +15,8 @@ const userOrders = async (req: Request, res: Response) => {
 };
 
 const orderRoutes = (app: express.Application) => {
-  app.get("/orders/:status/:id", authMiddleware, orderStatus);
-  app.get("/orders/:id", authMiddleware, userOrders);
+  app.get('/orders/:status/:id', authMiddleware, orderStatus);
+  app.get('/orders/:id', authMiddleware, userOrders);
 };
 
 export default orderRoutes;

@@ -1,8 +1,8 @@
-import express, { Request, Response } from "express";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
-import { User, UserStore } from "../models/users";
-import authMiddleware from "../utils/authentication-middleware";
+import express, { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import { User, UserStore } from '../models/users';
+import authMiddleware from '../utils/authentication-middleware';
 
 const pepper = process.env.BCRYPT_PASSWORD;
 const store = new UserStore();
@@ -47,25 +47,25 @@ const authenticate = async (req: Request, res: Response) => {
     const match = await bcrypt.compare(password + pepper, user.password);
 
     if (!match) {
-      return res.status(401).json({ error: "Invalid credentials" });
+      return res.status(401).json({ error: 'Invalid credentials' });
     }
 
     const token = jwt.sign({ userId: user.id }, tokenSecret, {
-      expiresIn: "1h",
+      expiresIn: '1h',
     });
     res.json({ token });
   }
 
   if (!user) {
-    return res.status(401).json({ error: "Cannot find user" });
+    return res.status(401).json({ error: 'Cannot find user' });
   }
 };
 
 const userRoutes = (app: express.Application) => {
-  app.get("/users", authMiddleware, index);
-  app.get("/users/:id", authMiddleware, show);
-  app.post("/users", authMiddleware, create);
-  app.post("/users/authenticate", authenticate);
+  app.get('/users', authMiddleware, index);
+  app.get('/users/:id', authMiddleware, show);
+  app.post('/users', authMiddleware, create);
+  app.post('/users/authenticate', authenticate);
 };
 
 export default userRoutes;

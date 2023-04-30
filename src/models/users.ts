@@ -1,8 +1,8 @@
-import bcrypt from "bcrypt";
-import dotenv from "dotenv";
+import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
 
 // @ts-ignore
-import client from "../database";
+import client from '../database';
 
 dotenv.config();
 
@@ -21,7 +21,7 @@ export class UserStore {
     try {
       // @ts-ignore
       const conn = await client.connect();
-      const sql = "SELECT * FROM users";
+      const sql = 'SELECT * FROM users';
 
       const result = await conn.query(sql);
 
@@ -35,7 +35,7 @@ export class UserStore {
 
   async show(id: string): Promise<User> {
     try {
-      const sql = "SELECT * FROM users WHERE id=($1)";
+      const sql = 'SELECT * FROM users WHERE id=($1)';
       // @ts-ignore
       const conn = await client.connect();
 
@@ -51,7 +51,7 @@ export class UserStore {
 
   async findUser(firstName: string, lastName: string): Promise<User> {
     try {
-      const sql = "SELECT * FROM users WHERE firstName=($1) and lastName=($2)";
+      const sql = 'SELECT * FROM users WHERE firstName=($1) and lastName=($2)';
       // @ts-ignore
       const conn = await client.connect();
 
@@ -61,22 +61,16 @@ export class UserStore {
 
       return result.rows[0];
     } catch (err) {
-      throw new Error(
-        `Could not find User ${firstName} ${lastName}. Error: ${err}`
-      );
+      throw new Error(`Could not find User ${firstName} ${lastName}. Error: ${err}`);
     }
   }
 
   async create(b: User): Promise<User> {
     try {
-      const sql =
-        "INSERT INTO users (firstName, lastName, password) VALUES($1, $2, $3) RETURNING *";
+      const sql = 'INSERT INTO users (firstName, lastName, password) VALUES($1, $2, $3) RETURNING *';
       // @ts-ignore
       const conn = await client.connect();
-      const hash = bcrypt.hashSync(
-        b.password + pepper,
-        parseInt(saltRounds as string)
-      );
+      const hash = bcrypt.hashSync(b.password + pepper, parseInt(saltRounds as string));
 
       const result = await conn.query(sql, [b.firstName, b.lastName, hash]);
       const user = result.rows[0];
@@ -90,7 +84,7 @@ export class UserStore {
 
   async delete(id: string): Promise<User> {
     try {
-      const sql = "DELETE FROM users WHERE id=($1) CASCADE";
+      const sql = 'DELETE FROM users WHERE id=($1) CASCADE';
       // @ts-ignore
       const conn = await client.connect();
 
@@ -108,16 +102,14 @@ export class UserStore {
 
   async dropUserRecords(): Promise<void> {
     try {
-      const sql = "TRUNCATE users CASCADE";
+      const sql = 'TRUNCATE users CASCADE';
       // @ts-ignore
       const conn = await client.connect();
       await conn.query(sql);
 
       conn.release();
     } catch (err) {
-      throw new Error(
-        `Could not delete all records from users table. Error: ${err}`
-      );
+      throw new Error(`Could not delete all records from users table. Error: ${err}`);
     }
   }
 }

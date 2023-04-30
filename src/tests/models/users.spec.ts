@@ -1,13 +1,13 @@
-import { User, UserStore } from "../../models/users";
+import { User, UserStore } from '../../models/users';
 
 const userStore = new UserStore();
 
-describe("UserStore", () => {
+describe('UserStore', () => {
   beforeAll(async () => {
     await userStore.create({
-      firstName: "john",
-      lastName: "doe2",
-      password: "udacity-project",
+      firstName: 'john',
+      lastName: 'doe2',
+      password: 'udacity-project',
     });
   });
 
@@ -15,22 +15,20 @@ describe("UserStore", () => {
     await userStore.dropUserRecords();
   });
 
-  describe("user index method", () => {
-    it("should return all users", async () => {
+  describe('user index method', () => {
+    it('should return all users', async () => {
       const users: User[] = await userStore.index();
 
       expect(users.length).toBeGreaterThan(0);
     });
   });
 
-  describe("user show method", () => {
-    it("should return a single user", async () => {
+  describe('user show method', () => {
+    it('should return a single user', async () => {
       const users: User[] = await userStore.index();
 
       if (users.length > 0) {
-        const user: User = await userStore.show(
-          (users[0].id as unknown as number).toString()
-        );
+        const user: User = await userStore.show((users[0].id as unknown as number).toString());
 
         if (user) {
           expect(user).toBeTruthy();
@@ -39,20 +37,18 @@ describe("UserStore", () => {
     });
   });
 
-  describe("user create method", () => {
-    it("should create a new user", async () => {
+  describe('user create method', () => {
+    it('should create a new user', async () => {
       const createUser: User = await userStore.create({
-        firstName: "john",
-        lastName: "doe5",
-        password: "udacity-project",
+        firstName: 'john',
+        lastName: 'doe5',
+        password: 'udacity-project',
       });
 
       if (createUser) {
-        const getNewUser: User = await userStore.show(
-          (createUser.id as unknown as number).toString()
-        );
+        const getNewUser: User = await userStore.show((createUser.id as unknown as number).toString());
         // @ts-ignore
-        expect(getNewUser.lastname).toBe("doe5");
+        expect(getNewUser.lastname).toBe('doe5');
       }
     });
   });

@@ -1,5 +1,5 @@
 // @ts-ignore
-import client from "../database";
+import client from '../database';
 
 export type Product = {
   id?: number;
@@ -13,7 +13,7 @@ export class ProductStore {
     try {
       // @ts-ignore
       const conn = await client.connect();
-      const sql = "SELECT * FROM products";
+      const sql = 'SELECT * FROM products';
 
       const result = await conn.query(sql);
 
@@ -28,7 +28,7 @@ export class ProductStore {
 
   async show(id: string): Promise<Product> {
     try {
-      const sql = "SELECT * FROM products WHERE id=($1)";
+      const sql = 'SELECT * FROM products WHERE id=($1)';
       // @ts-ignore
       const conn = await client.connect();
 
@@ -44,8 +44,7 @@ export class ProductStore {
 
   async create(b: Product): Promise<Product> {
     try {
-      const sql =
-        "INSERT INTO products (price, category, name) VALUES($1, $2, $3) RETURNING *";
+      const sql = 'INSERT INTO products (price, category, name) VALUES($1, $2, $3) RETURNING *';
       // @ts-ignore
       const conn = await client.connect();
       const result = await conn.query(sql, [b.price, b.category, b.name]);
@@ -62,7 +61,7 @@ export class ProductStore {
 
   async delete(id: string): Promise<Product> {
     try {
-      const sql = "DELETE FROM products WHERE id=($1) CASCADE";
+      const sql = 'DELETE FROM products WHERE id=($1) CASCADE';
       // @ts-ignore
       const conn = await client.connect();
 
@@ -79,16 +78,14 @@ export class ProductStore {
   }
   async dropProductRecords(): Promise<void> {
     try {
-      const sql = "TRUNCATE products CASCADE";
+      const sql = 'TRUNCATE products CASCADE';
       // @ts-ignore
       const conn = await client.connect();
       await conn.query(sql);
 
       conn.release();
     } catch (err) {
-      throw new Error(
-        `Could not delete all records from products table. Error: ${err}`
-      );
+      throw new Error(`Could not delete all records from products table. Error: ${err}`);
     }
   }
 }
