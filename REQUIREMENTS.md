@@ -21,6 +21,19 @@
 
 **GET** `/product/:id` - returns an object of a single product based on it's id.
 
+**Response**
+
+```
+{
+    "id": 1,
+    "name": "Racecar",
+    "price": "7.00",
+    "category": "Toy"
+}
+```
+
+**POST** `/products` - Create a new product (authorization required)
+
 **Body**
 
 ```
@@ -42,8 +55,6 @@
     "category": "Toy"
 }
 ```
-
-**POST** `/products` - Create a new product (token required)
 
 ### Orders
 
