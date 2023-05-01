@@ -4,7 +4,7 @@
 
 ### Products
 
-- GET /products - Get a list of all products
+**GET** `/products` - Get a list of all products
 
 **Response**
 
