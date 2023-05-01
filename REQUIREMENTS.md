@@ -183,33 +183,33 @@ eyJhbGciOiJIUzI1NiJ9.JDJiJDEwJGV1WklWVlpRRnBoVll2Z3phTndaZS5qeWJIdDZhL2ZINi9pMkh
 
 | Property | Type   | Description                                       |
 | -------- | ------ | ------------------------------------------------- |
-| id       | number | An optional unique identifier for the order.      |
+| id       | number | A unique identifier for the order.                |
 | user_id  | number | The ID of the user who placed the order.          |
 | quantity | number | The quantity of items in the order.               |
 | status   | string | The status of the order (e.g. "pending", "paid"). |
 
 ### Order Product
 
-| Property   | Type   | Description                                          |
-| ---------- | ------ | ---------------------------------------------------- |
-| id         | number | An optional unique identifier for the order product. |
-| order_id   | number | An optional ID of the order that the product is in.  |
-| product_id | number | The ID of the product associated with the order.     |
+| Property   | Type   | Description                                      |
+| ---------- | ------ | ------------------------------------------------ |
+| id         | number | A unique identifier for the order product.       |
+| order_id   | number | A ID of the order that the product is in.        |
+| product_id | number | The ID of the product associated with the order. |
 
 ### Product
 
-| Property | Type   | Description                                    |
-| -------- | ------ | ---------------------------------------------- |
-| id       | number | An optional unique identifier for the product. |
-| price    | number | The price of the product.                      |
-| category | string | The category the product belongs to.           |
-| name     | string | The name of the product.                       |
+| Property | Type   | Description                          |
+| -------- | ------ | ------------------------------------ |
+| id       | number | A unique identifier for the product. |
+| price    | number | The price of the product.            |
+| category | string | The category the product belongs to. |
+| name     | string | The name of the product.             |
 
 ### User
 
-| Property  | Type   | Description                                 |
-| --------- | ------ | ------------------------------------------- |
-| id        | number | An optional unique identifier for the user. |
-| firstName | string | The first name of the user.                 |
-| lastName  | string | The last name of the user.                  |
-| password  | string | The password for the user's account.        |
+| Property  | Type   | Description                          |
+| --------- | ------ | ------------------------------------ |
+| id        | number | A unique identifier for the user.    |
+| firstName | string | The first name of the user.          |
+| lastName  | string | The last name of the user.           |
+| password  | string | The password for the user's account. |
