@@ -60,6 +60,7 @@ describe('Order Routes', () => {
 
         if (currentUser) {
           const userOrders = await request.get(`/orders/${currentUser.id}`).set('Authorization', authBearer);
+
           expect(userOrders.statusCode).toBe(200);
         }
       }
@@ -76,6 +77,7 @@ describe('Order Routes', () => {
 
         if (currentUser) {
           const userOrders = await request.get(`/orders/complete/${currentUser.id}`).set('Authorization', authBearer);
+
           expect(userOrders.statusCode).toBe(200);
         }
       }

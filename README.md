@@ -73,7 +73,7 @@ This will run the tests in the tests directory of the project.
 ### Products
 
 - GET /products - Get a list of all products
-- GET /product/id - Get a single product by ID
+- GET /product/:id - Get a single product by ID
 - POST /products - Create a new product (token required)
 
 ### Orders
