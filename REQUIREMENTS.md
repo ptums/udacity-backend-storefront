@@ -181,20 +181,20 @@ eyJhbGciOiJIUzI1NiJ9.JDJiJDEwJGV1WklWVlpRRnBoVll2Z3phTndaZS5qeWJIdDZhL2ZINi9pMkh
 
 ### Order
 
-| Property | Type   | Description                                       |
-| -------- | ------ | ------------------------------------------------- |
-| id       | number | A unique identifier for the order.                |
-| user_id  | number | The ID of the user who placed the order.          |
-| quantity | number | The quantity of items in the order.               |
-| status   | string | The status of the order (e.g. "pending", "paid"). |
+| Property | Type   | Description                                                      |
+| -------- | ------ | ---------------------------------------------------------------- |
+| id       | number | A unique identifier for the order.                               |
+| user_id  | number | The ID of the user who placed the order. Reference to User model |
+| quantity | number | The quantity of items in the order.                              |
+| status   | string | The status of the order (e.g. "active", "complete").             |
 
 ### Order Product
 
-| Property   | Type   | Description                                      |
-| ---------- | ------ | ------------------------------------------------ |
-| id         | number | A unique identifier for the order product.       |
-| order_id   | number | A ID of the order that the product is in.        |
-| product_id | number | The ID of the product associated with the order. |
+| Property   | Type   | Description                                                                 |
+| ---------- | ------ | --------------------------------------------------------------------------- |
+| id         | number | A unique identifier for the order product.                                  |
+| order_id   | number | A ID of the order that the product is in. Reference to Order model          |
+| product_id | number | The ID of the product associated with the order. Reference to Product model |
 
 ### Product
 
