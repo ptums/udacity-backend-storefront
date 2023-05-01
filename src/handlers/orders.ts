@@ -17,7 +17,7 @@ const userOrders = async (req: Request, res: Response) => {
 const create = async (req: Request, res: Response) => {
   const order = await store.create(req.body);
 
-  res.json(order);
+  res.status(201).json(order);
 };
 const orderRoutes = (app: express.Application) => {
   app.get('/orders/:status/:id', authMiddleware, orderStatus);

@@ -15,13 +15,15 @@ const testUser = {
   password: 'udacity-project',
 };
 
+const testProduct = {
+  price: 6.5,
+  category: 'Toy',
+  name: 'Truck',
+};
+
 describe('Order Routes', () => {
   beforeAll(async () => {
-    const testOrderProduct = await productStore.create({
-      price: 6.5,
-      category: 'Toy',
-      name: 'Truck',
-    });
+    const testOrderProduct = await productStore.create(testProduct);
 
     const testOrderUser = await userStore.create(testUser);
 
@@ -80,6 +82,30 @@ describe('Order Routes', () => {
 
           expect(userOrders.statusCode).toBe(200);
         }
+      }
+    });
+  });
+
+  describe('POST routes', () => {
+    it('POST /orders should return status 201', async () => {
+      const currentUser = await userStore.findUser(testUser.firstName, testUser.lastName);
+      const currentProduct = await productStore.create({
+        price: 8,
+        category: 'Toy',
+        name: 'Legos',
+      });
+
+      if (currentUser && currentProduct) {
+        const newOrder = {
+          user_id: currentUser.id as number,
+          quantity: 5,
+          status: 'active',
+          product_id: currentProduct.id as number,
+        };
+
+        const createOrder = await request.post(`/orders`).send(newOrder);
+
+        expect(createOrder.statusCode).toBe(201);
       }
     });
   });

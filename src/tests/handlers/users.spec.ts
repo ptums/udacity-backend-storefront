@@ -61,8 +61,6 @@ describe('User Routes', () => {
         password: 'temppassword456',
       });
 
-      console.log({ response });
-
       expect(response.status).toBe(201);
     });
   });
