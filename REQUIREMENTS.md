@@ -4,7 +4,7 @@
 
 ### Products
 
-**GET** `/products` - Get a list of all products
+**GET** `/products` - returns an array of all products
 
 **Response**
 
@@ -19,8 +19,31 @@
 ]
 ```
 
-- GET /product/:id - Get a single product by ID
-- POST /products - Create a new product (token required)
+**GET** `/product/:id` - returns an object of a single product based on it's id.
+
+**Body**
+
+```
+{
+    "id": 3,
+    "name": "Water gun",
+    "price": "4.50",
+    "category": "Toy"
+}
+```
+
+**Response**
+
+```
+{
+    "id": 3,
+    "name": "Water gun",
+    "price": "4.50",
+    "category": "Toy"
+}
+```
+
+**POST** `/products` - Create a new product (token required)
 
 ### Orders
 
