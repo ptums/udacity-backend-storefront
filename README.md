@@ -67,24 +67,3 @@ npm test
 ```
 
 This will run the tests in the tests directory of the project.
-
-## API Endpoints
-
-### Products
-
-- GET /products - Get a list of all products
-- GET /product/:id - Get a single product by ID
-- POST /products - Create a new product (token required)
-
-### Orders
-
-- GET /orders/:status/:id - Get all orders from a user categorized by status (token required)
-- GET /orders/:id - Get all orders from a user (token required)
-- POST /orders - Create a new order (token required)
-
-### Users
-
-- GET /users - get a list of all users (token required)
-- GET /users/:id get a user by id (token required)
-- POST /users - create a user
-- POST /usrs/authenticate - authenticate a user
