@@ -32,7 +32,7 @@
 }
 ```
 
-**POST** `/products` - Create a new product (authorization required)
+**POST** `/products` - create a new product. (authorization required)
 
 **Body**
 
@@ -58,16 +58,124 @@
 
 ### Orders
 
-- GET /orders/:status/:id - Get all orders from a user categorized by status (token required)
-- GET /orders/:id - Get all orders from a user (token required)
-- POST /orders - Create a new order (token required)
+**GET** `/orders/:status/:id` - returns an array of orders based with a specific status "active" or "complete" based on the user's id.(authorization required)
+
+**Response**
+
+```
+[
+    {
+        "id": 1,
+        "quantity": 5,
+        "status": "active"
+    }
+]
+```
+
+**GET** `/orders/:id` - returns an array of orders based on the user's id. (authorization required)
+
+**Response**
+
+```
+[
+    {
+        "id": 1,
+        "quantity": 5,
+        "status": "active"
+    }
+]
+```
+
+**POST** `/orders` - create a new order. (authorization required)
+
+**Body**
+
+```
+{
+    "user_id": 1,
+    "quantity": 10,
+    "status": "complete",
+    "product_id": 1
+}
+```
+
+**Response**
+
+```
+{
+    "id": 2,
+    "order_id": 2,
+    "product_id": 1
+}
+```
 
 ### Users
 
-- GET /users - get a list of all users (token required)
-- GET /users/:id get a user by id (token required)
-- POST /users - create a user
-- POST /usrs/authenticate - authenticate a user
+**GET** `/users` - returns an array of all users. (authorization required)
+
+**Response**
+
+```
+[
+    {
+        "id": 1,
+        "firstname": "Tom",
+        "lastname": "Thumb",
+        "password": "$2b$10$JeJnIxIJ9ZkKN1/3o2xSMugzIR9VwoOgPT5K8JPVu3Ejtm/Jnvmwe"
+    }
+]
+```
+
+**GET** `/users/:id` - returns an array of all users. (authorization required)
+
+**Response**
+
+```
+{
+    "id": 1,
+    "firstname": "Tom",
+    "lastname": "Thumb",
+    "password": "$2b$10$JeJnIxIJ9ZkKN1/3o2xSMugzIR9VwoOgPT5K8JPVu3Ejtm/Jnvmwe"
+}
+```
+
+**POST** `/users` - creates a new user and returns a JWT token.
+
+**Body**
+
+```
+{
+    "firstName": "Peter",
+    "lastName": "Pan",
+    "password": "neverland123"
+}
+```
+
+**Response**
+
+```
+eyJhbGciOiJIUzI1NiJ9.JDJiJDEwJGV1WklWVlpRRnBoVll2Z3phTndaZS5qeWJIdDZhL2ZINi9pMkhtVFdIcXFlSW85U3ZLeEgy.ROvd_fcMQP7scg4iSC_2hRh8yc0w3FWh1qtaQCkbvnA
+```
+
+**POST** `/users/authenticate` - authenticates a new user and returns a JWT token.
+
+**Body**
+
+```
+{
+    "firstName": "Peter",
+    "lastName": "Pan",
+    "password": "neverland123"
+}
+```
+
+**Response**
+
+```
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTY4MjkzNjE2MCwiZXhwIjoxNjgyOTM5NzYwfQ.FbQbYgCH9MLn9fXpaaRGV-klmgg38295IB9JZLaLSRc"
+}
+```
 
 ## Models
 
