@@ -22,7 +22,7 @@ const create = async (req: Request, res: Response) => {
 const orderRoutes = (app: express.Application) => {
   app.get('/orders/:status/:id', authMiddleware, orderStatus);
   app.get('/orders/:id', authMiddleware, userOrders);
-  app.post('/orders', create);
+  app.post('/orders', authMiddleware, create);
 };
 
 export default orderRoutes;
