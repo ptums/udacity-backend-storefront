@@ -5,6 +5,20 @@
 ### Products
 
 - GET /products - Get a list of all products
+
+**Response**
+
+```
+[
+    {
+        "id": 1,
+        "name": "Racecar",
+        "price": "7.00",
+        "category": "Toy"
+    }
+]
+```
+
 - GET /product/:id - Get a single product by ID
 - POST /products - Create a new product (token required)
 
@@ -39,3 +53,21 @@
 | id         | number | An optional unique identifier for the order product. |
 | order_id   | number | An optional ID of the order that the product is in.  |
 | product_id | number | The ID of the product associated with the order.     |
+
+### Product
+
+| Property | Type   | Description                                    |
+| -------- | ------ | ---------------------------------------------- |
+| id       | number | An optional unique identifier for the product. |
+| price    | number | The price of the product.                      |
+| category | string | The category the product belongs to.           |
+| name     | string | The name of the product.                       |
+
+### User
+
+| Property  | Type   | Description                                 |
+| --------- | ------ | ------------------------------------------- |
+| id        | number | An optional unique identifier for the user. |
+| firstName | string | The first name of the user.                 |
+| lastName  | string | The last name of the user.                  |
+| password  | string | The password for the user's account.        |
